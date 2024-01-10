@@ -9,6 +9,6 @@ interface IProducts {
   packSize: string;
   category: string;
   mrp: string;
-  imageUrl: string;
+  image: string;
   status: string;
 }
