@@ -1,11 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import PageNotFound from "./pages/PageNotFound";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
+import { PageNotFound } from "./pages/PageNotFound";
 import { useAuth } from "./context/AuthContext";
 import { PrivateRoute } from "./components/routes/PrivateRoute";
 import { PublicRoute } from "./components/routes/PublicRoute";
-import Dashboard from "./pages/Dashboard";
+import { Dashboard } from "./pages/Dashboard";
 
 function App() {
   const { token, user } = useAuth();

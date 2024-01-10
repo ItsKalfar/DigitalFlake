@@ -40,7 +40,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const res = await loginUser(loginCredentials);
       const { data } = res;
       setUser(data.user);
-      setToken(data.accessToken);
+      setToken(data.user.accessToken);
       setToLocalStorage("user", data.user);
       setToLocalStorage("token", data.accessToken);
       navigate("/dashboard");

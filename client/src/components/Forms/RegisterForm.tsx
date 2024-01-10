@@ -6,7 +6,7 @@ import { Input, PasswordInput } from "./Input";
 import { Button } from "../Button";
 import digitalFlake from "../../assets/images/digitalflakeLogo.png";
 
-const RegisterForm = () => {
+export const RegisterForm = () => {
   const { signup } = useAuth();
 
   const formSchema = z.object({
@@ -76,5 +76,3 @@ const RegisterForm = () => {
     </form>
   );
 };
-
-export default RegisterForm;

@@ -4,6 +4,16 @@ import validator from "validator";
 import { Schema, model } from "mongoose";
 import { IUser } from "../types/models";
 import { AvailableUserRoles, UserRolesEnum } from "../constants";
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: "./.env",
+});
+
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET!;
+const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRY!;
+const refreshAccessTokenSecret = process.env.REFRESH_TOKEN_SECRET!;
+const refreshAccessTokenExpiry = process.env.REFRESH_TOKEN_EXPIRY!;
 
 const userSchema = new Schema(
   {
@@ -22,7 +32,6 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Please provide a password"],
       minlength: [8, "Password shouild be atleast 8 charcters"],
-      select: false,
     },
     role: {
       type: String,
@@ -45,6 +54,9 @@ userSchema.pre<IUser>("save", async function (next): Promise<void> {
 });
 
 userSchema.methods.isPasswordCorrect = async function (password: string) {
+  if (!password || !this.password) {
+    return false;
+  }
   return await compare(password, this.password);
 };
 
@@ -55,8 +67,8 @@ userSchema.methods.generateAccessToken = function () {
       email: this.email,
       role: this.role,
     },
-    process.env.ACCESS_TOKEN_SECRET as string,
-    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
+    accessTokenSecret,
+    { expiresIn: accessTokenExpiry }
   );
 };
 
@@ -65,8 +77,8 @@ userSchema.methods.generateRefreshToken = function () {
     {
       _id: this._id,
     },
-    process.env.REFRESH_TOKEN_SECRET as string,
-    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
+    refreshAccessTokenSecret,
+    { expiresIn: refreshAccessTokenExpiry }
   );
 };
 

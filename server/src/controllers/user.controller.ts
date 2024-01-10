@@ -74,7 +74,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Username or email is required");
   }
 
-  const user = await User.findOne({ email }).select("-password");
+  const user = await User.findOne({ email });
 
   if (!user) {
     throw new ApiError(400, "User does not exist");
@@ -98,7 +98,6 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
   };
 
   return res

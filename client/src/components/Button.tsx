@@ -2,12 +2,12 @@ import { forwardRef, ButtonHTMLAttributes, FC } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "bg-[#5C218B] rounded inline-flex flex-shrink-0 justify-center items-center text-center shadow-sm",
+  "rounded inline-flex flex-shrink-0 justify-center items-center text-center shadow-sm font-md",
   {
     variants: {
       variant: {
-        default: "bg-gray-700 text-white font-semibold",
-        outline: "bg-transparent text-gray-900",
+        default: "bg-[#5C218B] text-white",
+        outline: "bg-transparent border border-[#5C218B] text-[#5C218B]",
       },
       size: {
         default: "h-10 px-6 py-2",
@@ -26,8 +26,6 @@ const buttonVariants = cva(
 interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
-
-// Use forwardRef hook to be able to use ref on button
 
 export const Button: FC<ButtonProps> = forwardRef<
   HTMLButtonElement,

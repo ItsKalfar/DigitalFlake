@@ -6,7 +6,7 @@ import { Input, PasswordInput } from "./Input";
 import { Button } from "../Button";
 import digitalFlake from "../../assets/images/digitalflakeLogo.png";
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const { login } = useAuth();
 
   const formSchema = z.object({
@@ -74,5 +74,3 @@ const LoginForm = () => {
     </form>
   );
 };
-
-export default LoginForm;
