@@ -1,11 +1,53 @@
-import backgroudn from "./assets/login-bg.svg";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import PageNotFound from "./pages/PageNotFound";
+import { useAuth } from "./context/AuthContext";
+import { PrivateRoute } from "./components/routes/PrivateRoute";
+import { PublicRoute } from "./components/routes/PublicRoute";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
+  const { token, user } = useAuth();
   return (
-    <>
-      <h1 className="bg-red-600 text-3xl">Jay Shree Ganesh</h1>
-      <img src={backgroudn} />
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          token && user?._id ? (
+            <Navigate to="/dashboard" />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+      />
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   );
 }
 

@@ -6,10 +6,9 @@ import {
   useState,
   useEffect,
 } from "react";
-import { useNavigate } from "react-router-dom";
 import { loginUser, logoutUser, registerUser } from "../assets/api";
 import { getFromLocalStorage, setToLocalStorage } from "../utils/LocalStorage";
-import Loading from "../components/Loading";
+import { Loading } from "../components/Loading";
 import { toast } from "sonner";
 
 type AuthContextType = {
@@ -29,8 +28,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  const navigate = useNavigate();
-
   const login = async (loginCredentials: {
     email: string;
     password: string;
@@ -43,7 +40,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setToken(data.accessToken);
       setToLocalStorage("user", data.user);
       setToLocalStorage("token", data.accessToken);
-      navigate("/dashboard");
+      // navigate("/dashboard");
       toast.success("Logged in Successfully!");
     } catch (error: any) {
       toast.error(error.message);
@@ -61,7 +58,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const { data } = res;
       console.log(data);
       if (data) {
-        navigate("/login");
+        // navigate("/login");
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -75,7 +72,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const res = await logoutUser();
       const { data } = res;
       if (data) {
-        navigate("/login");
+        // navigate("/login");
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -85,13 +82,15 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const _user = getFromLocalStorage("user");
     const _token = getFromLocalStorage("token");
 
-    if (_user && _token) {
+    if (_user?._id && _token) {
       setUser(_user);
       setToken(_token);
     }
+    setIsLoading(false);
   }, []);
 
   return (

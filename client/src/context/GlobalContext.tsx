@@ -6,9 +6,10 @@ import {
   useState,
   useEffect,
 } from "react";
-import Loading from "../components/Loading";
+import { Loading } from "../components/Loading";
 import { toast } from "sonner";
 import { getCategories, getProducts } from "../assets/api";
+import { useAuth } from "./AuthContext";
 
 type GlobalContextType = {
   categories: ICategories[];
@@ -25,6 +26,7 @@ export const GlobalContextProvider: FC<{ children: ReactNode }> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<ICategories[]>([]);
   const [products, setIsProduct] = useState<IProducts[]>([]);
+  const { user, token } = useAuth();
 
   const getAllCategories = async () => {
     try {
@@ -52,8 +54,10 @@ export const GlobalContextProvider: FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
-    getAllCategories();
-    getAllProducts();
+    if (user?._id && token) {
+      getAllCategories();
+      getAllProducts();
+    }
   }, []);
 
   return (
