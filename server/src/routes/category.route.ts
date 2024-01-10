@@ -17,3 +17,5 @@ router.route("/addCategory").post(addCategoryValidationRules(), addCategory);
 router
   .route("/deleteCategory")
   .delete(deleteCategoryValidationRules(), deleteCategory);
+
+export default router;
