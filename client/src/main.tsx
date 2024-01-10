@@ -9,13 +9,13 @@ import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <GlobalContextProvider>
-      <AuthProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+      <GlobalContextProvider>
+        <AuthProvider>
           <Toaster />
           <App />
-        </BrowserRouter>
-      </AuthProvider>
-    </GlobalContextProvider>
+        </AuthProvider>
+      </GlobalContextProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

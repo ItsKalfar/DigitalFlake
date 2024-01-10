@@ -10,11 +10,12 @@ import { loginUser, logoutUser, registerUser } from "../assets/api";
 import { getFromLocalStorage, setToLocalStorage } from "../utils/LocalStorage";
 import { Loading } from "../components/Loading";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 type AuthContextType = {
   user: IUser | null;
   login: (data: { email: string; password: string }) => Promise<void>;
-  register: (data: { email: string; password: string }) => Promise<void>;
+  signup: (data: { email: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
   token: string | null;
 };
@@ -28,6 +29,8 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+
   const login = async (loginCredentials: {
     email: string;
     password: string;
@@ -40,7 +43,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setToken(data.accessToken);
       setToLocalStorage("user", data.user);
       setToLocalStorage("token", data.accessToken);
-      // navigate("/dashboard");
+      navigate("/dashboard");
       toast.success("Logged in Successfully!");
     } catch (error: any) {
       toast.error(error.message);
@@ -48,7 +51,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setIsLoading(false);
     }
   };
-  const register = async (registerCredentials: {
+  const signup = async (registerCredentials: {
     email: string;
     password: string;
   }) => {
@@ -72,7 +75,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const res = await logoutUser();
       const { data } = res;
       if (data) {
-        // navigate("/login");
+        navigate("/login");
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -94,7 +97,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, token }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, token }}>
       {isLoading ? <Loading /> : children}
     </AuthContext.Provider>
   );

@@ -30,6 +30,7 @@ export const generateAccessAndRefreshTokens = async (userId: string) => {
 export const registerUser = asyncHandler(async (req, res) => {
   try {
     const { email, password, role } = req.body;
+    console.log(req.body);
 
     const existedUser = await User.findOne({ email });
 
@@ -73,7 +74,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Username or email is required");
   }
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("-password");
 
   if (!user) {
     throw new ApiError(400, "User does not exist");

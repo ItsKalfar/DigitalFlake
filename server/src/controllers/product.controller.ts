@@ -46,7 +46,7 @@ export const addproduct = asyncHandler(async (req, res) => {
 
 export const deleteProduct = asyncHandler(async (req, res) => {
   try {
-    const { productId } = req.body;
+    const { productId } = req.params;
     const userId = (req as IAuthInfoRequest).user._id;
 
     const product = await Product.findOne({ _id: productId, user: userId });

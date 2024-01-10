@@ -13,13 +13,13 @@ export const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
       <div className="my-1 w-full relative">
         <label
           htmlFor={id}
-          className="block text-sm font-medium mb-1 absolute top-2 left-3 text-gray-300"
+          className="block text-md font-medium mb-1 absolute top-[-10px] left-3 bg-white px-3"
         >
           {label}
         </label>
         <input
           type={type}
-          className={`w-full border-gray-700 border-2 rounded px-2.5 py-2 pt-8 bg-transparent disabled:opacity-[0.4] focus:bg-transparent focus:outline-none focus:border-gray-300 ${className}`}
+          className={`w-full border-gray-400 border-[1px] rounded px-6 py-4 bg-transparent disabled:opacity-[0.4] focus:bg-transparent focus:outline-none focus:border-gray-300 ${className}`}
           ref={ref}
           {...props}
         />
@@ -39,17 +39,17 @@ export const PasswordInput: FC<InputProps> = forwardRef<
     setShowPassword((prev) => !prev);
   };
   return (
-    <div className="mb-4 w-full relative">
+    <div className="my-1 w-full relative">
       <label
         htmlFor={id}
-        className="block text-sm font-medium mb-1 absolute top-2 left-3 text-gray-300"
+        className="block text-md font-medium mb-1 absolute top-[-10px] left-3 bg-white px-3"
       >
         {label}
       </label>
       <div>
         <input
           type={showPassword ? "text" : "password"}
-          className={`w-full border-gray-700 border-2 rounded px-2.5 py-2 pt-8 bg-transparent disabled:opacity-[0.5] focus:outline-none focus:border-gray-300 text-white focus:bg-transparent ${className}`}
+          className={`w-full border-gray-400 border-[1px] rounded px-6 py-4 bg-transparent disabled:opacity-[0.5] focus:outline-none focus:border-gray-300 focus:bg-transparent ${className}`}
           ref={ref}
           {...props}
         />

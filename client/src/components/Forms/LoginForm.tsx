@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, PasswordInput } from "./Input";
+import { Button } from "../Button";
 import digitalFlake from "../../assets/images/digitalflakeLogo.png";
 
 const LoginForm = () => {
@@ -37,18 +38,18 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<ValidationSchema> = (data: any) => {
     try {
-      const { email, password } = data;
-      const values = { email, password };
-      login(values);
+      login(data);
     } catch (error) {
       console.error("Validation error:", error);
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <img src={digitalFlake} />
-      </div>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="h-full bg-white rounded shadow-md items-center px-6 flex flex-col py-4"
+    >
+      <img src={digitalFlake} className="mb-0" />
+      <p className="text-gray-400 mb-10">Welcome to Digitalflake Admin</p>
 
       <Input
         id="Email"
@@ -57,6 +58,7 @@ const LoginForm = () => {
         placeholder="Enter email"
         {...register("email")}
         error={errors.email && errors.email.message}
+        className="mb-6"
       />
       <PasswordInput
         label="Password"
@@ -65,6 +67,10 @@ const LoginForm = () => {
         {...register("password")}
         error={errors.password && errors.password.message}
       />
+
+      <Button type="submit" className="w-full mt-5">
+        Log In
+      </Button>
     </form>
   );
 };
