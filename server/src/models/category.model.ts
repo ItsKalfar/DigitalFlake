@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import { CategoryStatus } from "../constants";
 import { ICategories } from "../types/models";
+import { User } from "./user.model";
 
 const categorySchema = new Schema(
   {
@@ -18,8 +19,13 @@ const categorySchema = new Schema(
       enum: CategoryStatus,
       required: true,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: User,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-export const category = model<ICategories>("Category", categorySchema);
+export const Category = model<ICategories>("Category", categorySchema);

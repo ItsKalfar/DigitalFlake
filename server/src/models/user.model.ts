@@ -13,14 +13,16 @@ const userSchema = new Schema(
         validator: (value: string) => validator.isEmail(value),
         message: "Invalid email address",
       },
-      required: true,
+      required: [true, "Please prvide your email"],
       unique: true,
       lowercase: true,
       trim: true,
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Please provide a password"],
+      minlength: [8, "Password shouild be atleast 8 charcters"],
+      select: false,
     },
     role: {
       type: String,
@@ -68,4 +70,4 @@ userSchema.methods.generateRefreshToken = function () {
   );
 };
 
-export const user = model<IUser>("User", userSchema);
+export const User = model<IUser>("User", userSchema);
