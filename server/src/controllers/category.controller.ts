@@ -43,7 +43,7 @@ export const addCategory = asyncHandler(async (req, res) => {
 
 export const deleteCategory = asyncHandler(async (req, res) => {
   try {
-    const { categoryId } = req.params;
+    const { categoryId } = req.body;
     const userId = (req as IAuthInfoRequest).user._id;
 
     const category = await Category.findOne({
