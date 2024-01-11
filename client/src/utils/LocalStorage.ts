@@ -15,7 +15,7 @@ const getFromLocalStorage = (key: string) => {
 
 const setToLocalStorage = (key: string, value: string) => {
   if (!isBrowser) return;
-  localStorage.setItem(key, value);
+  localStorage.setItem(key, JSON.stringify(value));
 };
 
 const removeFromLocalStorage = (key: string) => {

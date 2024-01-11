@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 import { CategoryStatus } from "../constants";
 import { ICategories } from "../types/models";
-import { User } from "./user.model";
 
 const categorySchema = new Schema(
   {
@@ -17,11 +16,6 @@ const categorySchema = new Schema(
     status: {
       type: String,
       enum: CategoryStatus,
-      required: true,
-    },
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: User,
       required: true,
     },
   },

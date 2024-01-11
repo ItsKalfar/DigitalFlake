@@ -12,10 +12,10 @@ import {
 
 const router = Router();
 
-router.route("/getProducts").get(getAllProducts);
-router.route("/addProduct").post(addProductValidationRules(), addproduct);
+router.route("/get_all_products").get(getAllProducts);
+router.route("/add_product").post(addProductValidationRules(), addproduct);
 router
-  .route("/deleteProduct")
+  .route("/delete_product")
   .delete(deleteProductValidationRules(), deleteProduct);
 
 export default router;

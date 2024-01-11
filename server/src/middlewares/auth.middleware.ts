@@ -1,13 +1,15 @@
 import { User } from "../models/user.model";
 import { IAuthInfoRequest } from "../types/express";
 import { ApiError } from "../utils/ApiError";
-import { asyncHandler } from "../utils/asyncHandler";
+import { asyncHandler } from "../utils/AsyncHandler";
 import { JwtPayload, verify } from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config({
   path: "../.env",
 });
+
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET!;
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
   const token =
@@ -19,10 +21,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
   }
 
   try {
-    const decodedToken = verify(
-      token,
-      process.env.ACCESS_TOKEN_SECRET as string
-    );
+    const decodedToken = verify(token, accessTokenSecret);
     const user = await User.findById((decodedToken as JwtPayload)?._id).select(
       "-password -refreshToken"
     );

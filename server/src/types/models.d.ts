@@ -6,8 +6,6 @@ export interface IUser extends Document {
   password: string;
   role: string;
   refreshToken: string | null;
-  forgotPasswordToken: string | null;
-  forgotPasswordExpiry: Date | null;
   generateAccessToken: () => string;
   generateRefreshToken: () => string;
   isPasswordCorrect: (password: string) => boolean;

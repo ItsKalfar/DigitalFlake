@@ -4,7 +4,6 @@ import {
   addCategory,
   deleteCategory,
 } from "../controllers/category.controller";
-
 import {
   addCategoryValidationRules,
   deleteCategoryValidationRules,
@@ -12,10 +11,10 @@ import {
 
 const router = Router();
 
-router.route("/getCategory").get(getAllCategories);
-router.route("/addCategory").post(addCategoryValidationRules(), addCategory);
+router.route("/get_all_categories").get(getAllCategories);
+router.route("/add_category").post(addCategoryValidationRules(), addCategory);
 router
-  .route("/deleteCategory")
+  .route("/delete_category")
   .delete(deleteCategoryValidationRules(), deleteCategory);
 
 export default router;

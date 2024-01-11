@@ -14,8 +14,7 @@ const productSchema = new Schema(
       required: true,
     },
     category: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
       required: true,
     },
     mrp: {
@@ -35,4 +34,4 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
-export const Product = model<IProducts>("Products", productSchema);
+export const Product = model<IProducts>("Product", productSchema);

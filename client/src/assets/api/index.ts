@@ -31,25 +31,25 @@ export const logoutUser = () => {
 };
 
 export const getCategories = () => {
-  return apiClient.post("/categories/getCategories");
+  return apiClient.get("/categories/get_all_categories");
 };
 
 export const getProducts = () => {
-  return apiClient.post("/products/getProducts");
+  return apiClient.get("/products/get_all_products");
 };
 
-export const createCategory = (data: ICategories) => {
-  return apiClient.post("/categories/addCategory", data);
+export const addCategory = (data: ICategories) => {
+  return apiClient.post("/categories/add_category", data);
 };
 
-export const createProduct = (data: IProducts) => {
-  return apiClient.post("/products/addProduct", data);
+export const addProduct = (data: IProducts) => {
+  return apiClient.post("/products/add_product", data);
 };
 
-export const deleteCategory = () => {
-  return apiClient.delete("/categories/deleteCategory");
+export const deleteCategory = (data: string) => {
+  return apiClient.delete("/categories/delete_category", { data });
 };
 
-export const deleteProduct = () => {
-  return apiClient.delete("/products/deleteProduct");
+export const deleteProduct = (data: string) => {
+  return apiClient.delete("/products/delete_product", { data });
 };

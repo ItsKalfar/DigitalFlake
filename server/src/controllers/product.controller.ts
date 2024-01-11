@@ -1,13 +1,11 @@
 import { ApiError } from "../utils/ApiError";
 import { ApiResponse } from "../utils/ApiResponse";
-import { asyncHandler } from "../utils/asyncHandler";
+import { asyncHandler } from "../utils/AsyncHandler";
 import { Product } from "../models/product.model";
-import { IAuthInfoRequest } from "../types/express";
 
 export const getAllProducts = asyncHandler(async (req, res) => {
   try {
-    const userId = (req as IAuthInfoRequest).user._id;
-    const products = await Product.find({ user: userId });
+    const products = await Product.find();
     return res.status(201).json(new ApiResponse(200, { products }));
   } catch (error: any) {
     throw new ApiError(500, error.message);
@@ -16,7 +14,6 @@ export const getAllProducts = asyncHandler(async (req, res) => {
 
 export const addproduct = asyncHandler(async (req, res) => {
   try {
-    const userId = (req as IAuthInfoRequest).user._id;
     const { name, packSize, category, mrp, image, status } = req.body;
     if (!name || !packSize || !category || !mrp || !image || !status) {
       throw new ApiError(400, "Please provide all the required fields");
@@ -29,7 +26,6 @@ export const addproduct = asyncHandler(async (req, res) => {
       mrp,
       image,
       status,
-      user: userId,
     });
 
     if (!newProduct) {
@@ -46,10 +42,9 @@ export const addproduct = asyncHandler(async (req, res) => {
 
 export const deleteProduct = asyncHandler(async (req, res) => {
   try {
-    const { productId } = req.params;
-    const userId = (req as IAuthInfoRequest).user._id;
+    const { productId } = req.body;
 
-    const product = await Product.findOne({ _id: productId, user: userId });
+    const product = await Product.findOne({ _id: productId });
 
     if (!product) {
       throw new ApiError(400, "Category not found or doesn't exist");

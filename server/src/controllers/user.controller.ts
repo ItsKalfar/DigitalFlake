@@ -3,7 +3,7 @@ import { UserRolesEnum } from "../constants";
 import { User } from "../models/user.model";
 import { ApiError } from "../utils/ApiError";
 import { ApiResponse } from "../utils/ApiResponse";
-import { asyncHandler } from "../utils/asyncHandler";
+import { asyncHandler } from "../utils/AsyncHandler";
 import { IAuthInfoRequest } from "../types/express";
 
 export const generateAccessAndRefreshTokens = async (userId: string) => {
@@ -17,7 +17,6 @@ export const generateAccessAndRefreshTokens = async (userId: string) => {
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
-    // attach refresh token to the user document to avoid refreshing the access token with multiple refresh tokens
     user.refreshToken = refreshToken;
 
     await user.save({ validateBeforeSave: false });
@@ -92,9 +91,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     user._id
   );
 
-  const loggedInUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
+  const loggedInUser = await User.findById(user._id);
 
   const options = {
     httpOnly: true,
@@ -132,7 +129,7 @@ export const logoutUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: false,
   };
 
   return res
@@ -166,7 +163,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: false,
     };
 
     const { accessToken, refreshToken: newRefreshToken } =
@@ -184,6 +181,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
         )
       );
   } catch (error: any) {
+    console.error("Error during token verification:", error);
     throw new ApiError(401, error?.message || "Invalid refresh token");
   }
 });

@@ -3,8 +3,10 @@ import { CircleUserRound, AlertTriangle } from "lucide-react";
 import digitalflakeLogo from "../assets/vector/digitalflake_nav_logo.svg";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Button } from "./Button";
+import { useAuth } from "../context/AuthContext";
 
 export const Navbar = () => {
+  const { logout } = useAuth();
   return (
     <nav className="bg-[#662671] py-5">
       <div className="flex item-center justify-between w-11/12 mx-auto max-w-[1100px]">
@@ -28,11 +30,13 @@ export const Navbar = () => {
               <p className="text-gray-500 font-thin mb-4">
                 Are you sure you want to log out ?
               </p>
-              <Dialog.Close className="mt-6">
+              <Dialog.Close className="mt-6 focus:outline-none border-none">
                 <Button variant={"outline"} className="rounded-3xl mx-2">
                   Cancel
                 </Button>
-                <Button className="rounded-3xl mx-2">Confirm</Button>
+                <Button className="rounded-3xl mx-2" onClick={() => logout()}>
+                  Confirm
+                </Button>
               </Dialog.Close>
             </Dialog.Content>
           </Dialog.Portal>
