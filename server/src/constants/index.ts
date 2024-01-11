@@ -6,15 +6,15 @@ export const UserRolesEnum = {
 export const AvailableUserRoles = Object.values(UserRolesEnum);
 
 export const CategoryStatusEnum = {
-  ACTIVE: "ACTIVE",
-  INACTIVE: "INACTIVE",
+  ACTIVE: "Active",
+  INACTIVE: "Inactive",
 };
 
 export const CategoryStatus = Object.values(CategoryStatusEnum);
 
 export const ProductStatusEnum = {
-  ACTIVE: "ACTIVE",
-  INACTIVE: "INACTIVE",
+  ACTIVE: "Active",
+  INACTIVE: "Inactive",
 };
 
 export const ProductStatus = Object.values(ProductStatusEnum);

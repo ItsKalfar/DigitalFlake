@@ -48,8 +48,7 @@ export const GlobalContextProvider: FC<{ children: ReactNode }> = ({
       setIsLoading,
       (res) => {
         const { data } = res;
-        console.log(data);
-        setCategories(data);
+        setCategories(data.categories);
       },
       toast
     );
@@ -60,8 +59,7 @@ export const GlobalContextProvider: FC<{ children: ReactNode }> = ({
       setIsLoading,
       (res) => {
         const { data } = res;
-        console.log(data);
-        setProducts(data);
+        setProducts(data.products);
       },
       toast
     );
@@ -84,10 +82,8 @@ export const GlobalContextProvider: FC<{ children: ReactNode }> = ({
     requestHandler(
       async () => await addCategory(categoryDetails),
       setIsLoading,
-      (res) => {
-        const { data } = res;
-        console.log(data);
-        toast.success("Category added successfully");
+      () => {
+        toast("Category added successfully");
       },
       toast
     );
@@ -128,7 +124,7 @@ export const GlobalContextProvider: FC<{ children: ReactNode }> = ({
       getAllProducts();
     }
     setIsLoading(false);
-  }, []);
+  }, [isLoading]);
 
   return (
     <GlobalContext.Provider

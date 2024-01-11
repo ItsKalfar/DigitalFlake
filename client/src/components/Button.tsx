@@ -23,6 +23,8 @@ const buttonVariants = cva(
   }
 );
 
+const buttonGroupVariants = cva("flex space-x-4");
+
 interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
@@ -39,3 +41,22 @@ export const Button: FC<ButtonProps> = forwardRef<
     />
   );
 });
+
+interface ButtonGroupProps extends VariantProps<typeof buttonGroupVariants> {
+  confirmProps: ButtonProps;
+  cancelProps: ButtonProps;
+  className?: string;
+}
+
+export const ButtonGroup: FC<ButtonGroupProps> = ({
+  confirmProps,
+  cancelProps,
+  className,
+}) => {
+  return (
+    <div className={buttonGroupVariants({ className })}>
+      <Button {...cancelProps} className="rounded-3xl" />
+      <Button {...confirmProps} className="rounded-3xl" type="submit" />
+    </div>
+  );
+};
